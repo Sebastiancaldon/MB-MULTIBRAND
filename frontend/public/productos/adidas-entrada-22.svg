@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 520" role="img" aria-label="Ilustración de Entrada 22 Jersey">
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#f8f9fb"/><stop offset="1" stop-color="#e6e9ef"/></linearGradient></defs>
+<rect width="600" height="520" fill="url(#bg)"/><circle cx="300" cy="240" r="198" fill="#1763dc" opacity=".09"/>
+<ellipse cx="300" cy="411" rx="185" ry="16" fill="#64748b" opacity=".16"/><path d="M210 155 L255 128 Q300 167 347 128 L390 155 L461 230 L414 268 L376 229 L379 395 H221 L224 229 L186 268 L139 230Z" fill="#142744" stroke="#1763dc" stroke-width="9"/><path d="M253 137 Q300 208 347 137" fill="none" stroke="#fff" stroke-width="9"/>
+<text x="35" y="45" font-family="Arial,sans-serif" font-weight="bold" font-size="23" fill="#142744">ADIDAS</text>
+<text x="300" y="470" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" fill="#475569">IMAGEN ILUSTRATIVA · DEMO</text>
+</svg>

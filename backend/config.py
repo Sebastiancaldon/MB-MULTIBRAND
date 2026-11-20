@@ -1,0 +1,9 @@
+"""Configuración central de MB Multibrand REST (compatible con la estructura SOAP original)."""
+from comun.config import DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD, JWT_SECRET, JWT_MINUTES, COMISION_MB
+
+CATALOGO_HOST = "127.0.0.1"
+CATALOGO_PORT = 5001
+CLIENTE_HOST = "127.0.0.1"
+CLIENTE_PORT = 5002
+CALIFICACIONES_HOST = "127.0.0.1"
+CALIFICACIONES_PORT = 5004

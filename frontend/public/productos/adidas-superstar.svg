@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 520" role="img" aria-label="Ilustración de Superstar">
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#f8f9fb"/><stop offset="1" stop-color="#e6e9ef"/></linearGradient></defs>
+<rect width="600" height="520" fill="url(#bg)"/><circle cx="300" cy="240" r="198" fill="#1763dc" opacity=".09"/>
+<ellipse cx="300" cy="411" rx="185" ry="16" fill="#64748b" opacity=".16"/><path d="M105 295 C150 300 185 254 224 226 L290 240 Q320 278 365 285 L480 310 Q506 318 502 341 L492 365 L124 365 Q83 354 105 295Z" fill="#142744" stroke="#1763dc" stroke-width="8"/><path d="M140 331 L470 331" stroke="#fff" stroke-width="7" opacity=".75"/><path d="M250 257 l70 19 m-82 -4 l70 20 m-82 -3 l65 19" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
+<text x="35" y="45" font-family="Arial,sans-serif" font-weight="bold" font-size="23" fill="#142744">ADIDAS</text>
+<text x="300" y="470" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" fill="#475569">IMAGEN ILUSTRATIVA · DEMO</text>
+</svg>
