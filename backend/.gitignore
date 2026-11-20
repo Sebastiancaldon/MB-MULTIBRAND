@@ -1,6 +1,17 @@
+# Credenciales
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
 .venv/
 venv/
-__pycache__/
-*.py[cod]
-.env
-*.log
+
+# Vue
+node_modules/
+dist/
+
+# Archivos locales
+.vscode/

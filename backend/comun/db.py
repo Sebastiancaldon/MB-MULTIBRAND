@@ -8,6 +8,7 @@ load_dotenv()
 
 def connect():
     database_url = os.environ["DATABASE_URL"]
+
     return psycopg.connect(
         database_url,
         row_factory=dict_row,
@@ -15,13 +16,19 @@ def connect():
     )
 
 def fetch_all(sql, params=()):
-    with connect() as conn:
+    conn = connect()
+    try:
         with conn.cursor() as cur:
             cur.execute(sql, params)
             return cur.fetchall()
+    finally:
+        conn.close()
 
 def fetch_one(sql, params=()):
-    with connect() as conn:
+    conn = connect()
+    try:
         with conn.cursor() as cur:
             cur.execute(sql, params)
             return cur.fetchone()
+    finally:
+        conn.close()

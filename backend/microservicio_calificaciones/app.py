@@ -56,23 +56,43 @@ def producto_activo(pid):
         "JOIN marcas m ON m.id_marca=p.id_marca WHERE p.id_producto=%s AND p.estado='ACTIVO'", (pid,))
 
 
+
 def estadisticas_producto(pid):
     row = fetch_one(
-        """SELECT COUNT(*) AS total, COALESCE(AVG(puntuacion),0) AS promedio,
-                  COALESCE(SUM(puntuacion>=%s),0) AS recomiendan,
-                  COALESCE(SUM(puntuacion=1),0) AS e1, COALESCE(SUM(puntuacion=2),0) AS e2,
-                  COALESCE(SUM(puntuacion=3),0) AS e3, COALESCE(SUM(puntuacion=4),0) AS e4,
-                  COALESCE(SUM(puntuacion=5),0) AS e5
-           FROM calificaciones WHERE id_producto=%s""", (UMBRAL_RECOMIENDA, pid))
+        """SELECT
+               COUNT(*) AS total,
+               COALESCE(AVG(puntuacion), 0) AS promedio,
+               COUNT(*) FILTER (WHERE puntuacion >= %s) AS recomiendan,
+               COUNT(*) FILTER (WHERE puntuacion = 1) AS e1,
+               COUNT(*) FILTER (WHERE puntuacion = 2) AS e2,
+               COUNT(*) FILTER (WHERE puntuacion = 3) AS e3,
+               COUNT(*) FILTER (WHERE puntuacion = 4) AS e4,
+               COUNT(*) FILTER (WHERE puntuacion = 5) AS e5
+           FROM calificaciones
+           WHERE id_producto = %s""",
+        (UMBRAL_RECOMIENDA, pid)
+    )
+
     total = int(row["total"])
     promedio = float(row["promedio"])
+
     return {
         "total_calificaciones": total,
         "promedio": round(promedio, 2),
-        "puntaje_ponderado": puntaje_ponderado(promedio, total, media_global()) if total else None,
-        "porcentaje_recomiendan": round(float(row["recomiendan"]) * 100 / total, 1) if total else 0.0,
-        "distribucion": {str(i): int(row[f"e{i}"]) for i in range(5, 0, -1)},
+        "puntaje_ponderado": (
+            puntaje_ponderado(promedio, total, media_global())
+            if total else None
+        ),
+        "porcentaje_recomiendan": (
+            round(float(row["recomiendan"]) * 100 / total, 1)
+            if total else 0.0
+        ),
+        "distribucion": {
+            str(i): int(row[f"e{i}"])
+            for i in range(5, 0, -1)
+        },
     }
+
 
 
 # ----------------------------------------------------------------- endpoints
