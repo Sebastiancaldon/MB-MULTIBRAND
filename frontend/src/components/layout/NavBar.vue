@@ -66,7 +66,12 @@ async function buscar() {
         </form>
         <div class="d-flex align-items-center gap-3 ms-lg-3 flex-wrap">
           
-          <RouterLink to="/#valoraciones" class="nav-link">★ Reseñas</RouterLink>
+          <RouterLink
+:to="{ path: '/', hash: '#valoraciones' }"
+  class="nav-link"
+>
+  ★ Reseñas
+</RouterLink>
           <RouterLink to="/carrito" class="cart-link" aria-label="Ver carrito"
             >🛒
             <span class="badge rounded-pill text-bg-danger">{{ cart.unidades }}</span></RouterLink

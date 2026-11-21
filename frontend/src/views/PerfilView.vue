@@ -58,7 +58,7 @@
         >
       </div>
       <div class="col-md-4">
-        <RouterLink to="/#valoraciones" class="service-panel"
+        <RouterLink to="{ path: '/', hash: '#valoraciones' }" class="service-panel"
           ><span class="service-icon">🏆</span>
           <div>
             <strong>Ranking de productos</strong>

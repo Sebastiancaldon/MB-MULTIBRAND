@@ -123,6 +123,7 @@
 
 
 /* Posicionamiento correcto del ranking */
-#valoraciones {
+#valoraciones,
+#ofertas {
   scroll-margin-top: 120px;
 }
