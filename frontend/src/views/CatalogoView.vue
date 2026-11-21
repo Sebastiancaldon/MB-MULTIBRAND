@@ -414,14 +414,16 @@ watch(
         </div>
 
         <div class="brand-grid">
-          <button
-            v-for="(r, index) in destacados"
-            :key="r.id_producto"
-            class="col-md-6 col-xl-3"
-            :class="{ 'is-active': marca === m.id }"
-            :aria-pressed="marca === m.id"
-            @click="seleccionar(m.id)"
-          >
+          
+<button
+  v-for="m in marcas"
+  :key="m.id || 'all'"
+  class="brand-tile"
+  :class="{ 'is-active': marca === m.id }"
+  :aria-pressed="marca === m.id"
+  @click="seleccionar(m.id)"
+>
+
             <span
               v-if="m.id"
               class="official-logo-box"
@@ -721,11 +723,13 @@ watch(
           v-if="destacados.length"
           class="row g-3"
         >
-          <div
-            v-for="r in destacados"
-            :key="r.id_producto"
-            class="col-md-6 col-xl-3"
-          >
+          
+<div
+  v-for="(r, index) in destacados"
+  :key="r.id_producto"
+  class="col-md-6 col-xl-3"
+>
+
             <RouterLink
               :to="`/producto/${r.id_producto}`"
               class="ranking-card"
