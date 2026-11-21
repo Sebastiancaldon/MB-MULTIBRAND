@@ -317,10 +317,6 @@ def reputacion_marcas():
     return jsonify({"total": len(salida), "marcas": clean(salida)})
 
 
-@app.get("/health")
-@require_auth
-def health():
-    return jsonify({"servicio": "calificaciones", "estado": "activo"})
 
 
 @app.errorhandler(404)

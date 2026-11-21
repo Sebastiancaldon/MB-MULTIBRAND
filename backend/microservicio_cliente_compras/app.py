@@ -267,14 +267,6 @@ def estado_compra(pago_id):
     return jsonify(clean(row))
 
 
-@app.get('/health')
-@require_auth
-def health():
-    return jsonify({
-        'servicio': 'compras',
-        'estado': 'activo'
-    })
-
 
 @app.errorhandler(404)
 def not_found(_):

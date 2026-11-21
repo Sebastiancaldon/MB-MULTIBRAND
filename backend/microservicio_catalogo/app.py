@@ -198,14 +198,6 @@ def categorias():
     })
 
 
-@app.get('/health')
-def health():
-    return jsonify({
-        'servicio': 'catalogo',
-        'estado': 'activo'
-    })
-
-
 @app.errorhandler(404)
 def not_found(_):
     return jsonify({
