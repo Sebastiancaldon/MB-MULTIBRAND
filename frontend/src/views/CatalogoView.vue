@@ -110,16 +110,31 @@ const visibles = computed(() => {
 })
 
 // RANKING DE PRODUCTOS
-const destacados = computed(() =>
-  ranking.value
-    .filter(
-      (r) =>
+
+const destacados = computed(() => {
+  return [...ranking.value]
+    .filter((producto) => {
+      return (
         !marca.value ||
-        String(r.marca).toLowerCase() ===
-          marca.value.toLowerCase()
-    )
+        normalizar(producto.marca) === normalizar(marca.value)
+      )
+    })
+    .sort((a, b) => {
+      const promedioA = Number(a.promedio) || 0
+      const promedioB = Number(b.promedio) || 0
+
+      const votosA = Number(a.votos) || 0
+      const votosB = Number(b.votos) || 0
+
+      if (promedioB !== promedioA) {
+        return promedioB - promedioA
+      }
+
+      return votosB - votosA
+    })
     .slice(0, 4)
-)
+})
+
 
 const reputacionActual = computed(() =>
   reputaciones.value.find(
@@ -179,20 +194,25 @@ async function irAOfertas() {
 }
 
 // BUSCADOR PRINCIPAL DEL CATÁLOGO
+
 async function buscar() {
   const texto = busqueda.value.trim()
 
-  // Limpiar filtros anteriores
   marca.value = ''
   categoria.value = ''
 
   await router.push({
     path: '/',
     query: texto ? { q: texto } : {},
-    hash: '#ofertas',
+    hash: '#ofertas'
   })
 
-  await irAOfertas()
+  await nextTick()
+
+  document.getElementById('ofertas')?.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  })
 }
 
 // CARGAR PRODUCTOS
@@ -385,9 +405,9 @@ watch(
 
         <div class="brand-grid">
           <button
-            v-for="m in marcas"
-            :key="m.id || 'all'"
-            class="brand-tile"
+            v-for="(r, index) in destacados"
+            :key="r.id_producto"
+            class="col-md-6 col-xl-3"
             :class="{ 'is-active': marca === m.id }"
             :aria-pressed="marca === m.id"
             @click="seleccionar(m.id)"
@@ -701,7 +721,7 @@ watch(
               class="ranking-card"
             >
               <span class="ranking-position">
-                #{{ r.posicion }}
+                #{{ index + 1 }}
               </span>
 
               <span class="text-warning fs-4">

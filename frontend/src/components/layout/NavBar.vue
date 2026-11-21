@@ -1,5 +1,5 @@
 <script setup>
-  import { ref } from 'vue'
+  import { ref, nextTick } from 'vue'
   import { useRouter } from 'vue-router'
   import { useAuthStore } from '@/stores/auth'
   import { useCarritoStore } from '@/stores/carrito'
@@ -8,6 +8,7 @@
     router = useRouter(),
     q = ref('')
   
+
 async function buscar() {
   const texto = q.value.trim()
 
@@ -16,7 +17,15 @@ async function buscar() {
     query: texto ? { q: texto } : {},
     hash: '#ofertas'
   })
+
+  await nextTick()
+
+  document.getElementById('ofertas')?.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  })
 }
+
 
   function salir() {
     auth.logout()
