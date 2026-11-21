@@ -7,9 +7,17 @@
     cart = useCarritoStore(),
     router = useRouter(),
     q = ref('')
-  function buscar() {
-    router.push({ path: '/', query: q.value.trim() ? { q: q.value.trim() } : {} })
-  }
+  
+async function buscar() {
+  const texto = q.value.trim()
+
+  await router.push({
+    path: '/',
+    query: texto ? { q: texto } : {},
+    hash: '#ofertas'
+  })
+}
+
   function salir() {
     auth.logout()
     router.push('/')
@@ -48,10 +56,9 @@
           /><button class="btn btn-dark" type="submit">Buscar</button>
         </form>
         <div class="d-flex align-items-center gap-3 ms-lg-3 flex-wrap">
-          <RouterLink to="/?categoria=Ropa" class="nav-link">Ropa</RouterLink
-          ><RouterLink to="/?categoria=Calzado" class="nav-link">Calzado</RouterLink
-          ><RouterLink to="/#valoraciones" class="nav-link">★ Reseñas</RouterLink
-          ><RouterLink to="/carrito" class="cart-link" aria-label="Ver carrito"
+          
+          <RouterLink to="/#valoraciones" class="nav-link">★ Reseñas</RouterLink>
+          <RouterLink to="/carrito" class="cart-link" aria-label="Ver carrito"
             >🛒
             <span class="badge rounded-pill text-bg-danger">{{ cart.unidades }}</span></RouterLink
           ><template v-if="auth.estaAutenticado"

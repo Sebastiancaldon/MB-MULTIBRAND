@@ -63,3 +63,8 @@
 
 /* Etiqueta transparente para imágenes ilustrativas del catálogo demo */
 .demo-image-label { position:absolute;bottom:10px;left:10px;z-index:2;background:rgba(255,255,255,.93);color:#475569;font-size:10px;font-weight:700;padding:5px 9px;border-radius:99px;box-shadow:0 2px 12px #0001; }
+
+#valoraciones,
+#ofertas {
+  scroll-margin-top: 110px;
+}

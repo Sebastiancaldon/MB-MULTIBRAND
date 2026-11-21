@@ -50,18 +50,55 @@
     },
   ]
   const activa = computed(() => marcas.find((m) => m.id === marca.value) || marcas[0])
-  const visibles = computed(() =>
-    store.lista.filter(
-      (p) =>
-        (!marca.value || String(p.marca || '').toLowerCase() === marca.value.toLowerCase()) &&
-        (!categoria.value ||
-          String(p.categoria || '').toLowerCase() === categoria.value.toLowerCase()) &&
-        (!busqueda.value ||
-          `${p.producto} ${p.marca} ${p.categoria}`
-            .toLowerCase()
-            .includes(busqueda.value.toLowerCase())),
-    ),
-  )
+  
+const normalizar = (texto) =>
+  String(texto ?? '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+
+const visibles = computed(() => {
+  const texto = normalizar(busqueda.value)
+
+  return store.lista.filter((p) => {
+    const marcaProducto = normalizar(p.marca)
+    const categoriaProducto = normalizar(p.categoria)
+
+    const cumpleMarca =
+      !marca.value ||
+      marcaProducto === normalizar(marca.value)
+
+    const cumpleCategoria =
+      !categoria.value ||
+      categoriaProducto === normalizar(categoria.value)
+
+    const contenido = normalizar(
+      [
+        p.producto,
+        p.marca,
+        p.categoria,
+        p.descripcion
+      ].filter(Boolean).join(' ')
+    )
+
+    const palabras = texto.split(/\s+/).filter(Boolean)
+
+    const cumpleBusqueda =
+      !texto ||
+      palabras.every((palabra) =>
+        contenido.includes(palabra)
+      )
+
+    return (
+      cumpleMarca &&
+      cumpleCategoria &&
+      cumpleBusqueda
+    )
+  })
+}
+)
+
   const destacados = computed(() =>
     ranking.value
       .filter((r) => !marca.value || String(r.marca).toLowerCase() === marca.value.toLowerCase())
@@ -80,9 +117,26 @@
     seleccionar('')
     router.replace('/')
   }
-  function buscar() {
-    document.getElementById('ofertas')?.scrollIntoView({ behavior: 'smooth' })
-  }
+  
+async function buscar() {
+  const texto = busqueda.value.trim()
+
+  await router.push({
+    path: '/',
+    query: {
+      q: texto || undefined,
+      marca: marca.value || undefined,
+      categoria: categoria.value || undefined
+    },
+    hash: '#ofertas'
+  })
+
+  document.getElementById('ofertas')?.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  })
+}
+
   async function cargar() {
     try {
       await store.cargar()
@@ -295,7 +349,7 @@
         </div>
         <div v-if="destacados.length" class="row g-3">
           <div v-for="r in destacados" :key="r.id_producto" class="col-md-6 col-xl-3">
-            <RouterLink :to="`/producto/${r.id_producto}#opiniones`" class="ranking-card"
+            <RouterLink :to="`/producto/${r.id_producto}`" class="ranking-card">
               ><span class="ranking-position">#{{ r.posicion }}</span
               ><span class="text-warning fs-4">★★★★★</span><strong>{{ r.producto }}</strong
               ><span class="text-secondary small"

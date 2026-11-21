@@ -10,6 +10,26 @@ const routes=[
  {path:'/checkout',name:'checkout',component:()=>import('@/views/CheckoutView.vue'),meta:{requiereAuth:true}},
  {path:'/perfil',name:'perfil',component:()=>import('@/views/PerfilView.vue'),meta:{requiereAuth:true}},
  {path:'/:pathMatch(.*)*',redirect:'/'}]
-const router=createRouter({history:createWebHistory(import.meta.env.BASE_URL),routes,scrollBehavior(to,from,saved){if(saved)return saved;if(to.hash)return {el:to.hash,behavior:"smooth"};return {top:0,left:0}}})
+const router=createRouter({history:createWebHistory(import.meta.env.BASE_URL),routes,
+scrollBehavior(to, from, savedPosition) {
+  if (savedPosition) {
+    return savedPosition
+  }
+
+  if (to.hash) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          el: to.hash,
+          top: 110,
+          behavior: 'smooth'
+        })
+      }, 200)
+    })
+  }
+
+  return { top: 0, left: 0 }
+}
+})
 router.beforeEach(to=>{if(to.meta.requiereAuth&&!useAuthStore().estaAutenticado)return {name:'login',query:{redirect:to.fullPath}}})
 export default router
