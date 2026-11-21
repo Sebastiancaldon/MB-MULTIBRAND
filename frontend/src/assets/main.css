@@ -343,3 +343,63 @@
     height: 65px;
   }
 }
+
+
+/* ========================================
+   CARRUSEL MOVIL - IMAGEN COMPLETA
+======================================== */
+
+@media (max-width: 767px) {
+
+  .flash-carousel-hero .flash-slide {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  /* Contenedor de la imagen */
+  .flash-carousel-hero .flash-image {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    position: relative !important;
+    width: 100% !important;
+    height: 220px !important;
+    min-height: 220px !important;
+    max-height: 220px !important;
+
+    padding: 15px !important;
+    overflow: hidden !important;
+  }
+
+  /* Imagen del producto */
+  .flash-carousel-hero .flash-image img {
+    position: static !important;
+
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+
+    max-width: 100% !important;
+    max-height: 100% !important;
+
+    object-fit: contain !important;
+    object-position: center !important;
+
+    transform: none !important;
+    scale: 1 !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+  }
+
+  /* Información debajo de la imagen */
+  .flash-carousel-hero .flash-info {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 18px !important;
+    transform: none !important;
+  }
+}
