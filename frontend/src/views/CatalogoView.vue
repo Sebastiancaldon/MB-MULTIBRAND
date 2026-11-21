@@ -1,5 +1,5 @@
 <script setup>
-  import { computed, onMounted, ref, watch } from 'vue'
+  import { computed, onMounted, ref, watch, nextTick } from 'vue'
   import { useRoute, useRouter } from 'vue-router'
   import { useCatalogoStore } from '@/stores/catalogo'
   import { useCarritoStore } from '@/stores/carrito'
@@ -169,10 +169,30 @@ async function buscar() {
     },
     { immediate: true },
   )
-  onMounted(() => {
-    cargar()
+  
+  
+onMounted(async () => {
+  await Promise.allSettled([
+    cargar(),
     cargarReviews()
-  })
+  ])
+
+  await nextTick()
+
+  if (route.hash === '#valoraciones') {
+    await irAlRanking()
+  }
+})
+
+watch(
+  () => route.hash,
+  async (hash) => {
+    if (hash === '#valoraciones') {
+      await irAlRanking()
+    }
+  }
+)
+
 </script>
 <template>
   <div class="brand-page" :class="'theme-' + (marca || 'all').toLowerCase()">

@@ -24,9 +24,18 @@ async function buscar() {
   }
 </script>
 <template>
-  <div class="announcement text-center py-2">
-    DESCUENTOS EN MARCAS SELECCIONADAS · DESCUBRE TU PRÓXIMA OFERTA
+  
+<div class="announcement announcement-marquee">
+  <div class="announcement-track">
+    <span v-for="i in 2" :key="i" class="announcement-group">
+      <span>✦ DESCUENTOS EN MARCAS SELECCIONADAS</span>
+      <span>✦ DESCUBRE TU PRÓXIMA OFERTA</span>
+      <span>✦ ENCUENTRA TU ESTILO FAVORITO</span>
+      <span>✦ MARCAS QUE TE ENCANTAN, PRECIOS QUE SORPRENDEN</span>
+    </span>
   </div>
+</div>
+
   <header class="sticky-top bg-white border-bottom">
     <nav class="navbar navbar-expand-lg container py-3">
       <RouterLink to="/" class="navbar-brand fw-black brand"

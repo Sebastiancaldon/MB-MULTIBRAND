@@ -16,17 +16,9 @@ scrollBehavior(to, from, savedPosition) {
     return savedPosition
   }
 
-  if (to.hash) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          el: to.hash,
-          top: 110,
-          behavior: 'smooth'
-        })
-      }, 200)
-    })
-  }
+  if (to.hash === '#valoraciones') {
+  return false
+}
 
   return { top: 0, left: 0 }
 }
