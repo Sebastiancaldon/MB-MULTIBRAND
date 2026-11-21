@@ -54,9 +54,19 @@ const marcas = [
   },
 ]
 
-const activa = computed(
-  () => marcas.find((m) => m.id === marca.value) || marcas[0]
-)
+const activa = computed(() => {
+  const lista = Array.isArray(marcas) ? marcas : []
+
+  return (
+    lista.find((m) => m && m.id === marca.value) ||
+    lista[0] || {
+      id: '',
+      nombre: 'Todas',
+      claim: 'TODAS LAS MARCAS. UN SOLO LUGAR.',
+      sub: 'Encuentra ofertas reales en ropa, calzado y accesorios.'
+    }
+  )
+})
 
 // NORMALIZAR TEXTOS PARA EL BUSCADOR
 const normalizar = (texto) =>
@@ -70,9 +80,9 @@ const normalizar = (texto) =>
 const visibles = computed(() => {
   const texto = normalizar(busqueda.value)
 
-  return store.lista.filter((p) => {
-    const marcaProducto = normalizar(p.marca)
-    const categoriaProducto = normalizar(p.categoria)
+ return (Array.isArray(store.lista) ? store.lista : [])
+  .filter((p) => {
+    if (!p) return false
 
     const cumpleMarca =
       !marca.value ||
