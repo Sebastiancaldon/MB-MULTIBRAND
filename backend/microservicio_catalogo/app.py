@@ -206,6 +206,16 @@ def diagnostico():
         'estado': 'activo'
     })
 
+@app.before_request
+def diagnosticar_ruta():
+    print(
+        "RUTA RECIBIDA:",
+        request.path,
+        "RUTA ORIGINAL:",
+        request.environ.get("RAW_URI"),
+        flush=True
+    )
+
 @app.errorhandler(404)
 def not_found(_):
     return jsonify({
