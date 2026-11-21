@@ -198,6 +198,14 @@ def categorias():
     })
 
 
+@app.get('/api/catalogo/diagnostico')
+def diagnostico():
+    return jsonify({
+        'ruta_recibida': request.path,
+        'servicio': 'catalogo',
+        'estado': 'activo'
+    })
+
 @app.errorhandler(404)
 def not_found(_):
     return jsonify({
