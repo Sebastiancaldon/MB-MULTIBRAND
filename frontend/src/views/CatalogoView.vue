@@ -76,46 +76,47 @@ const normalizar = (texto) =>
     .toLowerCase()
     .trim()
 
-// FILTRAR PRODUCTOS
+
+// FILTRAR PRODUCTOS POR MARCA, CATEGORIA Y BUSQUEDA
 const visibles = computed(() => {
   const texto = normalizar(busqueda.value)
+  const marcaSeleccionada = normalizar(marca.value)
+  const categoriaSeleccionada = normalizar(categoria.value)
 
- return (Array.isArray(store.lista) ? store.lista : [])
-  .filter((p) => {
+  const productos = Array.isArray(store.lista)
+    ? store.lista
+    : []
+
+  return productos.filter((p) => {
     if (!p) return false
 
+    const marcaProducto = normalizar(p.marca)
+    const categoriaProducto = normalizar(p.categoria)
+
     const cumpleMarca =
-      !marca.value ||
-      marcaProducto === normalizar(marca.value)
+      !marcaSeleccionada ||
+      marcaProducto === marcaSeleccionada
 
     const cumpleCategoria =
-      !categoria.value ||
-      categoriaProducto === normalizar(categoria.value)
+      !categoriaSeleccionada ||
+      categoriaProducto === categoriaSeleccionada
 
-    const contenido = normalizar(
-      [
-        p.producto,
-        p.marca,
-        p.categoria,
-        p.descripcion,
-      ]
-        .filter(Boolean)
-        .join(' ')
-    )
+    const contenido = normalizar([
+      p.producto,
+      p.marca,
+      p.categoria,
+      p.descripcion
+    ].filter(Boolean).join(' '))
 
     const palabras = texto.split(/\s+/).filter(Boolean)
 
-    const cumpleBusqueda =
-      !texto ||
-      palabras.every((palabra) =>
-        contenido.includes(palabra)
-      )
-
-    return (
-      cumpleMarca &&
-      cumpleCategoria &&
-      cumpleBusqueda
+    const cumpleBusqueda = palabras.every(
+      palabra => contenido.includes(palabra)
     )
+
+    return cumpleMarca &&
+           cumpleCategoria &&
+           cumpleBusqueda
   })
 })
 
@@ -154,18 +155,27 @@ const reputacionActual = computed(() =>
   )
 )
 
-// SELECCIONAR MARCA
-function seleccionar(id) {
-  marca.value = id
 
-  router.replace({
+// SELECCIONAR MARCA
+async function seleccionar(id) {
+  marca.value = id || ''
+  busqueda.value = ''
+  categoria.value = ''
+
+  await router.replace({
     path: '/',
-    query: {
-      ...route.query,
-      marca: id || undefined,
-    },
+    query: id ? { marca: id } : {},
+    hash: '#ofertas'
+  })
+
+  await nextTick()
+
+  document.getElementById('ofertas')?.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
   })
 }
+
 
 // LIMPIAR FILTROS
 function limpiar() {
