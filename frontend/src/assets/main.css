@@ -535,3 +535,29 @@
     object-fit: contain !important;
   }
 }
+
+
+/* ==========================================
+   CENTRAR LOGO MULTIBRAND EN CELULARES
+========================================== */
+
+@media (max-width: 767px) {
+
+  .navbar .navbar-brand {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin: 0 auto 12px auto !important;
+    padding: 8px 0 !important;
+  }
+
+  .navbar-brand img {
+    display: block !important;
+    margin: 0 auto !important;
+    max-width: 180px !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+}
