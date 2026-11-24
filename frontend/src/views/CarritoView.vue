@@ -25,7 +25,7 @@ function fotoProducto(p) {
 
 function cambiarCantidad(p, cambio) {
   const nueva = Number(p.cantidad) + cambio
-  const maximo = Math.min(Number(p.stock), 10)
+  const maximo = Number(p.stock)
 
   if (nueva >= 1 && nueva <= maximo) {
     cart.cantidad(p.id_producto, nueva)
@@ -185,9 +185,7 @@ function continuar() {
                 type="button"
                 class="quantity-btn"
                 aria-label="Aumentar cantidad"
-                :disabled="
-                  p.cantidad >= Math.min(p.stock, 10)
-                "
+                :disabled="p.cantidad >= Number(p.stock)"
                 @click="cambiarCantidad(p, 1)"
               >
                 +

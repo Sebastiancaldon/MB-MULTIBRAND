@@ -21,10 +21,9 @@ agregar(p, cantidad = 1) {
   const imagen = imagenPrincipal(p) || p.imagen || null
 
   const n = Math.min(
-    stock,
-    10,
-    (actual?.cantidad || 0) + Number(cantidad)
-  )
+  stock,
+  (actual?.cantidad || 0) + Number(cantidad)
+)
 
   if (!n) return false
 
@@ -70,7 +69,21 @@ agregar(p, cantidad = 1) {
 },
 
 
-  cantidad(id,n){const x=this.items.find(p=>p.id_producto===id);if(!x)return;x.cantidad=Math.max(1,Math.min(10,Number(x.stock),Number(n)||1));this.persistir()},
+  cantidad(id, n) {
+  const x = this.items.find(p => p.id_producto === id)
+
+  if (!x) return
+
+  x.cantidad = Math.max(
+    1,
+    Math.min(
+      Number(x.stock),
+      Math.trunc(Number(n)) || 1
+    )
+  )
+
+  this.persistir()
+},
   quitar(id){this.items=this.items.filter(p=>p.id_producto!==id);this.persistir()},
   async finalizar(){this.procesando=true;this.error='';this.resultado=[];try{for(const item of [...this.items]){try{const {data}=await comprasService.procesar(item.id_producto,item.cantidad);this.resultado.push(data);this.quitar(item.id_producto)}catch(e){this.error=`No se completó ${item.producto}: ${e.response?.data?.error||e.message}. Las compras anteriores sí se procesaron.`;break}}return !this.error}finally{this.procesando=false}}
  }

@@ -159,7 +159,7 @@
               class="form-control"
               style="max-width: 100px"
               min="1"
-              :max="Math.min(p.stock, 10)"
+              :max="Number(p.stock)"
               :disabled="p.stock === 0"
             />
           </div>
