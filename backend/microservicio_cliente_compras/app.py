@@ -123,15 +123,17 @@ def procesar_compra():
     data = request.get_json(silent=True) or {}
     pid = data.get('id_producto')
     cantidad = data.get('cantidad', 1)
+    talla = data.get('talla')
 
     if (
         type(pid) is not int
         or type(cantidad) is not int
         or cantidad < 1
-        or cantidad > 10
+        or not isinstance(talla, str)
+        or not talla.strip()
     ):
         return error(
-            'Envíe id_producto entero y cantidad entre 1 y 10'
+            'Envíe id_producto, cantidad positiva y talla'
         )
 
     conn = connect()
@@ -171,6 +173,12 @@ def procesar_compra():
                     stock_disponible=p['stock']
                 )
 
+            c.execute("SELECT stock FROM producto_tallas WHERE id_producto=%s AND talla=%s FOR UPDATE", (pid, talla))
+            variante = c.fetchone()
+            if not variante or variante['stock'] < cantidad:
+                conn.rollback()
+                return error('Stock insuficiente para la talla seleccionada', 409)
+            c.execute("UPDATE producto_tallas SET stock=stock-%s WHERE id_producto=%s AND talla=%s", (cantidad, pid, talla))
             original = float(p['precio']) * cantidad
             descuento = float(p['descuento'])
 
@@ -190,11 +198,11 @@ def procesar_compra():
                     total_pagado,
                     comision_mb,
                     valor_marca,
-                    estado_pago
+                    talla, cantidad, estado_pago
                 )
                 VALUES(
                     %s, %s, %s, %s,
-                    %s, %s, %s, 'APROBADO'
+                    %s, %s, %s, %s, %s, 'APROBADO'
                 )
                 RETURNING id_pago
             """, (
@@ -204,7 +212,7 @@ def procesar_compra():
                 descuento,
                 total,
                 comision,
-                valor_marca
+                valor_marca, talla, cantidad
             ))
 
             pago_id = c.fetchone()['id_pago']
@@ -222,6 +230,7 @@ def procesar_compra():
             'id_pago': pago_id,
             'producto': p['nombre'],
             'cantidad': cantidad,
+            'talla': talla,
             'precio_original': round(original, 2),
             'descuento_porcentaje': descuento,
             'total_pagado': total,
@@ -243,7 +252,7 @@ def procesar_compra():
 @require_auth
 def estado_compra(pago_id):
     row = fetch_one("""
-        SELECT pg.id_pago,
+        SELECT pg.id_pago, pg.talla, pg.cantidad,
                pg.estado_pago,
                pg.fecha_pago,
                pg.precio_original,

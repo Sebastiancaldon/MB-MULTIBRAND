@@ -161,6 +161,7 @@ def detalle(producto_id):
             'Producto no encontrado', 404
         )
 
+    row["tallas"] = fetch_all("SELECT talla, stock FROM producto_tallas WHERE id_producto=%s ORDER BY id_producto_talla", (producto_id,))
     return jsonify(clean(row))
 
 

@@ -83,8 +83,8 @@
       <div class="premium-card-actions mt-3">
         <RouterLink :to="`/producto/${p.id_producto}`" class="premium-view-btn"
           >Ver oferta <span>↗</span></RouterLink
-        ><button class="premium-cart-btn" :disabled="p.stock <= 0" @click="cart.agregar(p)">
-          🛒 Agregar al carrito</button
+        ><RouterLink class="premium-cart-btn" :to="`/producto/${p.id_producto}`">
+          🛒 Elegir talla</RouterLink
         ><RouterLink :to="`/producto/${p.id_producto}#opiniones`" class="premium-review-link"
           >★ Ver opiniones y calificar ↗</RouterLink
         >

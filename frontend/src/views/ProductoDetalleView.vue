@@ -40,10 +40,14 @@
   const ahorro = computed(() =>
     p.value ? Number(p.value.precio) - Number(p.value.precio_final) : 0,
   )
+  const talla = ref('')
+  const stockTalla = computed(() => Number(p.value?.tallas?.find(x => x.talla === talla.value)?.stock || 0))
+  watch(talla, () => { cantidad.value = 1 })
   async function cargar() {
     loading.value = true
     error.value = ''
     resumen.value = null
+    talla.value = ''
     cantidad.value = 1
     imagenActiva.value = ''
     imagenFallida.value = false
@@ -150,6 +154,18 @@
                   : 'En stock'
             }}
           </p>
+          <div class="mb-4">
+            <strong>Selecciona tu talla</strong>
+            <div class="d-flex flex-wrap gap-2 mt-2">
+              <button v-for="v in p.tallas || []" :key="v.talla" type="button"
+                class="btn" :class="talla === v.talla ? 'btn-dark' : 'btn-outline-secondary'"
+                :disabled="v.stock <= 0" :aria-pressed="talla === v.talla" @click="talla = v.talla">
+                {{ v.talla }}
+              </button>
+            </div>
+            <small v-if="talla">{{ stockTalla }} unidades disponibles en esta talla</small>
+            <small v-else>Selecciona una talla disponible.</small>
+          </div>
           <div class="d-flex gap-3 align-items-center mb-4">
             <label for="qty" class="fw-bold">Cantidad</label
             ><input
@@ -159,19 +175,19 @@
               class="form-control"
               style="max-width: 100px"
               min="1"
-              :max="Number(p.stock)"
-              :disabled="p.stock === 0"
+              :max="stockTalla"
+              :disabled="!talla || stockTalla === 0"
             />
           </div>
           <button
             class="btn btn-dark btn-lg w-100"
             :disabled="
-              p.stock === 0 ||
+              !talla || stockTalla === 0 ||
               cantidad < 1 ||
-              cantidad > Math.min(p.stock, 10) ||
+              cantidad > stockTalla ||
               !Number.isInteger(cantidad)
             "
-            @click="cart.agregar(p, cantidad)"
+            @click="cart.agregar({...p, stock: stockTalla}, cantidad, talla)"
           >
             Agregar al carrito →
           </button>

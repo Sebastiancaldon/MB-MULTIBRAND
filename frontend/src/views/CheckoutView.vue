@@ -18,7 +18,7 @@
       <strong>Compras procesadas:</strong>
       <ul class="mb-0">
         <li v-for="r in cart.resultado" :key="r.id_pago">
-          {{ r.producto }} · Pago #{{ r.id_pago }} · {{ money(r.total_pagado) }}
+          {{ r.producto }} · Talla {{ r.talla }} · Pago #{{ r.id_pago }} · {{ money(r.total_pagado) }}
         </li>
       </ul>
     </div>
@@ -26,10 +26,10 @@
     <div v-if="cart.items.length" class="checkout-summary">
       <div
         v-for="p in cart.items"
-        :key="p.id_producto"
+        :key="p.clave"
         class="d-flex justify-content-between py-2 border-bottom"
       >
-        <span>{{ p.producto }} × {{ p.cantidad }}</span
+        <span>{{ p.producto }} · Talla {{ p.talla }} × {{ p.cantidad }}</span
         ><strong>{{ money(p.precio_final * p.cantidad) }}</strong>
       </div>
       <div class="d-flex justify-content-between fs-4 fw-bold mt-4">

@@ -1,6 +1,6 @@
 import { comprasApi } from './api'
 export default {
- procesar: (id_producto,cantidad) => comprasApi.post('/api/compras/procesar',{id_producto,cantidad}),
+ procesar: (id_producto,cantidad,talla) => comprasApi.post('/api/compras/procesar',{id_producto,cantidad,talla}),
  estado: id => comprasApi.get(`/api/compras/${id}/estado`),
  favoritos: () => comprasApi.get('/api/compras/favoritos'),
  agregarFavorito: id_producto => comprasApi.post('/api/compras/favoritos',{id_producto}),

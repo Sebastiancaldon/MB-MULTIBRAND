@@ -28,7 +28,7 @@ function cambiarCantidad(p, cambio) {
   const maximo = Number(p.stock)
 
   if (nueva >= 1 && nueva <= maximo) {
-    cart.cantidad(p.id_producto, nueva)
+    cart.cantidad(p.clave, nueva)
   }
 }
 
@@ -86,7 +86,7 @@ function continuar() {
 
         <div
           v-for="p in cart.items"
-          :key="p.id_producto"
+          :key="p.clave"
           class="cart-item d-flex gap-3 align-items-center mb-3"
         >
 
@@ -117,7 +117,7 @@ function continuar() {
           <div class="cart-product-info flex-grow-1">
 
             <small class="text-secondary">
-              {{ p.marca }}
+              {{ p.marca }} · Talla {{ p.talla }}
             </small>
 
             <RouterLink
@@ -141,7 +141,7 @@ function continuar() {
             <button
               type="button"
               class="cart-remove"
-              @click="cart.quitar(p.id_producto)"
+              @click="cart.quitar(p.clave)"
             >
 
               <svg viewBox="0 0 24 24">
