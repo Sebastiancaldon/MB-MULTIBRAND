@@ -155,6 +155,7 @@ const reputacionActual = computed(() =>
   )
 )
 
+// SELECCIONAR MARCA
 
 // SELECCIONAR MARCA
 async function seleccionar(id) {
@@ -175,7 +176,6 @@ async function seleccionar(id) {
     block: 'start'
   })
 }
-
 
 // LIMPIAR FILTROS
 function limpiar() {

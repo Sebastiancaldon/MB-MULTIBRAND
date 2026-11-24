@@ -403,3 +403,135 @@
     transform: none !important;
   }
 }
+
+
+/* ==========================================
+   MB MULTIBRAND - AJUSTE DE IMAGENES MOVILES
+========================================== */
+
+@media (max-width: 767px) {
+
+  /* TARJETAS DEL CATALOGO */
+
+  .product-visual {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: hidden !important;
+    background: #fff;
+  }
+
+  .product-visual .product-image-link {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    padding: 0 !important;
+  }
+
+  .product-visual img {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    transform: none !important;
+    scale: 1 !important;
+    margin: 0 !important;
+    padding: 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* CARRUSEL PRINCIPAL */
+
+  .hero-carousel-panel {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .flash-carousel-hero .flash-slide {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .flash-carousel-hero .flash-image {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: 4 / 3 !important;
+    flex: none !important;
+    padding: 10px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .flash-carousel-hero .flash-image img {
+    position: static !important;
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    transform: none !important;
+    scale: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .flash-carousel-hero .flash-info {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    flex: none !important;
+    padding: 16px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* DETALLE DEL PRODUCTO */
+
+  .detail-visual {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: 1 / 1 !important;
+    overflow: hidden !important;
+    padding: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .detail-visual img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    transform: none !important;
+  }
+
+  /* MINIATURAS */
+
+  .gallery-thumb img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+  }
+}
